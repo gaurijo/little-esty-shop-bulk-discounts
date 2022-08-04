@@ -65,6 +65,7 @@ body li {
   font-family: 'Petrona', serif;
   padding: 5px 5px;
   text-align: left;
+  color: #663399;
 }
 
 .navbar ul {
@@ -81,5 +82,6 @@ body li {
 }
 
 .notice {
-  color: red;
+  color: #663399;
+  font-size: 24px;
 }
