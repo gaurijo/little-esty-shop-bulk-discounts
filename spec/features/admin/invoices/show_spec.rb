@@ -61,7 +61,7 @@ RSpec.describe "admin invoice show page" do
 
     expect(page).to have_content("Coaster")
     expect(page).to have_content("8")
-    expect(page).to have_content("74344")
+    expect(page).to have_content("$3,474.72")
     expect(page).to have_content("shipped")
     expect(page).to_not have_content("Tongs")
     expect(page).to_not have_content("Packaged")

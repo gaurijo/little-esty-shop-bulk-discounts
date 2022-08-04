@@ -3,17 +3,18 @@
 
 <h1>Admin Invoices Show</h1>
 
-<p>Invoice ID: <%= @invoice.id %></p>
+<h2>Invoice ID: <%= @invoice.id %></h2>
 <p>Status: <%= @invoice.status %></p>
 <p>Created at: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
-<p>Customer: <%= "#{@invoice.customer.first_name} #{@invoice.customer.last_name}"%></p>
-
+<h3>Customer: <%= "#{@invoice.customer.first_name} #{@invoice.customer.last_name}"%></h3>
+<br/>
 <h2>Invoice Items</h2>
 <% @invoice.invoice_items.each do |invoice_item| %>
- <p>Item: <%= invoice_item.item.name %></p>
+ <h3>Item: <%= invoice_item.item.name %></h3>
  <p>Quantity: <%= invoice_item.quantity %></p>
- <p>Unit Price: <%= invoice_item.item.unit_price %></p>
+ <p>Unit Price: <%= number_to_currency(invoice_item.item.unit_price.fdiv(100)) %></p>
  <p>Status: <%= invoice_item.status %></p>
+ <br/>
 <% end %>
 
 <h2>Invoice Total Revenue</h2>
