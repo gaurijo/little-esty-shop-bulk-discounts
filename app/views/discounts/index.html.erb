@@ -1,1 +1,12 @@
-<h1>discounts index page</h1>
+<%= render partial: 'shared/home_link', locals: {path: "/"} %>
+<%= stylesheet_link_tag "dashboard" %>
+
+<h1>My Bulk Discounts</h1>
+
+<% @merchant.discounts.each do |discount| %>
+<div id="discount-<%= discount.id %>">
+ Percentage: <%= discount.percentage %>
+ Quantity threshold: <%= discount.quantity_threshold %>
+ <%= link_to "my discount", "/merchants/#{@merchant.id}/discounts/#{discount.id}" %>
+</div>
+ <% end %>
