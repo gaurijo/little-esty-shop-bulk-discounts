@@ -17,4 +17,4 @@
 <% end %>
 
 <h2>Invoice Total Revenue</h2>
-<%= @invoice.total_rev %>
+<%= number_to_currency(@invoice.total_rev.fdiv(100)) %>
