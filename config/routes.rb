@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   get '/', to: 'application#welcome'
 
   resources :admin, only:[:index]
-
+  # resources :merchants do 
+  #   resources :discounts
+  
 
   namespace :admin do
     resources :invoices, only: [:index, :show]
@@ -20,8 +22,10 @@ Rails.application.routes.draw do
   #   resources :items, controller: 'merchant_items', only:[:index, :show, :update, :edit]
   # end
   get '/merchants', to: 'merchants#index'
+  get '/merchants/:merchant_id/discounts/:id', to: 'discounts#show'
   get '/merchants/:merchant_id/discounts', to: 'discounts#index'
   get '/merchants/:merchant_id/dashboard', to: 'dashboard#index'
+  
   get '/merchants/:id', to: 'merchants#show'
   get '/merchants/:merchant_id/items', to: 'merchant_items#index'
   get '/merchants/:merchant_id/items/:id/edit', to: 'items#edit'
