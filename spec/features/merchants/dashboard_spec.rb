@@ -1,6 +1,41 @@
 require 'rails_helper'
 
+# Merchant Bulk Discounts Index
+
+# As a merchant
+# When I visit my merchant dashboard
+# Then I see a link to view all my discounts
+
+# When I click this link
+# Then I am taken to my bulk discounts index page
+# Where I see all of my bulk discounts including their
+# percentage discount and quantity thresholds
+# And each bulk discount listed includes a link to its show page
+
 RSpec.describe 'the merchant dashboard' do
+  it 'shows a link to view all my discounts' do 
+    merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
+    merchant2 = Merchant.create!(name: 'Another Merchant', status: 'Disabled')
+    merchant3 = Merchant.create!(name: 'Faux Merchant', status: 'Enabled')
+
+    visit "/merchants/#{merchant1.id}/dashboard"
+
+    expect(page).to have_link("My Discounts")
+    expect(page).to have_content('Fake Merchant')
+    expect(page).to_not have_content('Another Merchant')
+  end
+
+  it 'takes merchant to their bulk discounts index page' do 
+    merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
+    merchant2 = Merchant.create!(name: 'Another Merchant', status: 'Disabled')
+    merchant3 = Merchant.create!(name: 'Faux Merchant', status: 'Enabled')
+
+    visit "/merchants/#{merchant1.id}/dashboard"
+    click_link("My Discounts")
+
+    expect(current_path).to eq("/merchants/#{merchant1.id}/discounts")
+  end
+
   it 'shows the name of the merchant' do
     merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
     merchant2 = Merchant.create!(name: 'Another Merchant', status: 'Disabled')

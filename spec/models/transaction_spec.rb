@@ -13,5 +13,6 @@ RSpec.describe Transaction, type: :model do
     it { should have_many(:invoice_items).through(:invoice) }
     it { should have_many(:items).through(:invoice_items) }
     it { should have_many(:merchants).through(:items) }
+    it { should have_many(:discounts).through(:merchants) }
   end
 end

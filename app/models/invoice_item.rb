@@ -9,6 +9,7 @@ class InvoiceItem < ApplicationRecord
   has_many :merchants, through: :item 
   has_many :customers, through: :merchants 
   has_many :transactions, through: :invoice 
+  has_many :discounts, through: :merchants 
 
   enum status: { 'pending' => 0, 'packaged' => 1, 'shipped' => 2}
 end
