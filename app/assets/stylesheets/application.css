@@ -16,8 +16,22 @@
 
  @import url('https://fonts.googleapis.com/css2?family=Petrona&family=Quicksand:wght@300&family=Tinos&display=swap');
 
-img.opacity {
-  opacity: 0.25;
+.hero {
+  background: url('dragonfly1.png') no-repeat center center fixed ;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(0,0,0,0.5);
 }
 
 body {
