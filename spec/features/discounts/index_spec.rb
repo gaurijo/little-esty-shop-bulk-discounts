@@ -57,5 +57,38 @@ RSpec.describe "Discounts Index page" do
     expect(current_path).to eq("/merchants/#{merchant1.id}/discounts")
     expect(page).to have_content("Percentage: 20")
     expect(page).to have_content("Quantity threshold: 40")
+    expect(page).to_not have_content("#{merchant2.name}")
+  end
+
+  it "displays a link to delete each discount" do 
+    merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
+    merchant2 = Merchant.create!(name: 'Walmart', status: 'Enabled')
+
+    discount1 = merchant1.discounts.create!(percentage: 10, quantity_threshold: 20)
+    discount2 = merchant1.discounts.create!(percentage: 40, quantity_threshold: 30)
+
+    visit "/merchants/#{merchant1.id}/discounts"
+
+    within "#discount-#{discount1.id}" do 
+      expect(page).to have_content("Percentage: 10")
+      expect(page).to have_content("Quantity threshold: 20")
+      expect(page).to have_link("Delete discount")
+      expect(page).to_not have_content("#{discount2.percentage}")
+    end
+
+    within "#discount-#{discount2.id}" do 
+      expect(page).to have_content("Percentage: 40")
+      expect(page).to have_content("Quantity threshold: 30")
+      expect(page).to have_link("Delete discount")
+      expect(page).to_not have_content("#{discount1.percentage}")
+      # expect(current_path).to eq("/merchants/#{merchant1.id}/discounts")
+    end
   end
 end
+
+# As a merchant
+# When I visit my bulk discounts index
+# Then next to each bulk discount I see a link to delete it
+# When I click this link
+# Then I am redirected back to the bulk discounts index page
+# And I no longer see the discount listed
