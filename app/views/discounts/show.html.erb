@@ -1,1 +1,8 @@
-<h1>discount show</h1>
+<%= render partial: 'shared/home_link', locals: {path: "/"} %>
+<%= stylesheet_link_tag "dashboard" %>
+
+<h1>Discount Details</h1>
+<meta charset="UTF-8">
+<p>&#9989;</p>
+<p>Percentage: <%= @discount.percentage %></p>
+<p>Quantity threshold: <%= @discount.quantity_threshold %></p>
