@@ -22,8 +22,11 @@ Rails.application.routes.draw do
   #   resources :items, controller: 'merchant_items', only:[:index, :show, :update, :edit]
   # end
   get '/merchants', to: 'merchants#index'
+  get '/merchants/:merchant_id/discounts/new', to: 'discounts#new'
   get '/merchants/:merchant_id/discounts/:id', to: 'discounts#show'
   get '/merchants/:merchant_id/discounts', to: 'discounts#index'
+  
+  post '/merchants/:merchant_id/discounts', to: 'discounts#create'
   get '/merchants/:merchant_id/dashboard', to: 'dashboard#index'
   
   get '/merchants/:id', to: 'merchants#show'
