@@ -5,9 +5,11 @@
 
 <% @merchant.discounts.each do |discount| %>
 <div id="discount-<%= discount.id %>">
- Percentage: <%= discount.percentage %>
- Quantity threshold: <%= discount.quantity_threshold %>
+ <p>Percentage: <%= discount.percentage %></p>
+ <p>Quantity threshold: <%= discount.quantity_threshold %></p>
  <%= link_to "my discount", "/merchants/#{@merchant.id}/discounts/#{discount.id}" %>
+ <br>
+ <%= link_to "Delete discount","/merchants/#{@merchant.id}/discounts/#{discount.id}", method: :delete %>
 </div>
  <% end %>
 

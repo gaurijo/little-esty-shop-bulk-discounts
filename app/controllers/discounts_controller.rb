@@ -14,11 +14,16 @@ class DiscountsController < ApplicationController
 
   def create 
     @merchant = Merchant.find(params[:merchant_id])
-    # discount = @merchant.discounts.create!(percentage: params[:percentage], quantity_threshold: params[:quantity_threshold])
     discount = @merchant.discounts.create!(discount_params)
 
-    # require 'pry'; binding.pry 
     redirect_to "/merchants/#{@merchant.id}/discounts"
+  end
+
+  def destroy 
+    merchant = Merchant.find(params[:merchant_id])
+    discount = Discount.find(params[:id])
+    discount.destroy
+    redirect_to "/merchants/#{merchant.id}/discounts"
   end
   
   private 
