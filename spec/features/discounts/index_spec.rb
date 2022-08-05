@@ -1,6 +1,5 @@
 require 'rails_helper' 
 
-# And each bulk discount listed includes a link to its show page
 RSpec.describe "Discounts Index page" do 
   it "shows all discounts belonging to that merchant" do 
     merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
@@ -38,4 +37,24 @@ RSpec.describe "Discounts Index page" do
 
     expect(current_path).to eq("/merchants/#{merchant1.id}/discounts/#{discount1.id}")
   end
+
+  it "has a link to create a new discount" do 
+    merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
+    merchant2 = Merchant.create!(name: 'Walmart', status: 'Enabled')
+
+    discount1 = merchant1.discounts.create!(percentage: 10, quantity_threshold: 20)
+    discount2 = merchant1.discounts.create!(percentage: 40, quantity_threshold: 30)
+
+    visit "/merchants/#{merchant1.id}/discounts"
+
+    find_link("Create discount")
+
+    expect(page).to have_link("Create discount")
+  end
 end
+
+# When I click this link
+# Then I am taken to a new page where I see a form to add a new bulk discount
+# When I fill in the form with valid data
+# Then I am redirected back to the bulk discount index
+# And I see my new bulk discount listed
