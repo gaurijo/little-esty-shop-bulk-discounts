@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   end
 
   get '/merchants', to: 'merchants#index'
-
+  get '/merchants/:merchant_id/discounts/:id/edit', to: 'discounts#edit'
+  patch '/merchants/:merchant_id/discounts/:id', to: 'discounts#update'
   get '/merchants/:merchant_id/discounts/new', to: 'discounts#new'
   get '/merchants/:merchant_id/discounts/:id', to: 'discounts#show'
   get '/merchants/:merchant_id/discounts', to: 'discounts#index'

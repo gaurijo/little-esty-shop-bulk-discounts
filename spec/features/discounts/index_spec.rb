@@ -33,7 +33,7 @@ RSpec.describe "Discounts Index page" do
 
     visit "/merchants/#{merchant1.id}/discounts"
 
-    click_link("my discount", match: :first)
+    click_link("View discount", match: :first)
 
     expect(current_path).to eq("/merchants/#{merchant1.id}/discounts/#{discount1.id}")
   end
