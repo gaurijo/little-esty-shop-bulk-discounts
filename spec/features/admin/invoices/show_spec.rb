@@ -95,4 +95,36 @@ RSpec.describe "admin invoice show page" do
 
     expect(page).to have_content("$3,474.72")
   end
+
+  it 'has a total discounted revenue generated' do
+    merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
+    
+    discount1 = merchant1.discounts.create!(percentage: 10, quantity_threshold: 2)
+    discount2 = merchant1.discounts.create!(percentage: 20, quantity_threshold: 3)
+
+    item1 = Item.create!(name: 'Coaster', description: 'For day drinking', unit_price: 74344, merchant_id: merchant1.id)
+    item2 = Item.create!(name: 'Tongs', description: 'For ice buckets', unit_price: 98334, merchant_id: merchant1.id)
+    item3 = Item.create!(name: 'knife', description: 'kitchen essential', unit_price: 28839, merchant_id: merchant1.id)
+
+    customer1 = Customer.create!(first_name: 'Bob', last_name: 'Smith')
+    customer2 = Customer.create!(first_name: 'Suzie', last_name: 'Hill')
+    customer3 = Customer.create!(first_name: 'Roger', last_name: 'Mathis')
+    customer4 = Customer.create!(first_name: 'Jim', last_name: 'Bob')
+
+    invoice1 = customer1.invoices.create!(status: 2)
+    invoice2 = customer2.invoices.create!(status: 2)
+    invoice3 = customer3.invoices.create!(status: 2)
+
+    invoice_item1 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice1.id, quantity: 4, unit_price: 43434, status: 2)
+    invoice_item2 = InvoiceItem.create!(item_id: item2.id, invoice_id: invoice2.id, quantity: 5, unit_price: 87654, status: 2)
+    invoice_item3 = InvoiceItem.create!(item_id: item3.id, invoice_id: invoice3.id, quantity: 6, unit_price: 65666, status: 2)
+
+    visit "/admin/invoices/#{invoice1.id}"
+
+    expect(page).to have_content('$1,389.89') #add model method in view
+  end
 end
+# As an admin
+# When I visit an admin invoice show page
+# Then I see the total revenue from this invoice (not including discounts)
+# And I see the total discounted revenue from this invoice which includes bulk discounts in the calculation

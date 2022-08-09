@@ -130,7 +130,7 @@ RSpec.describe Invoice, type: :model do
     end
   end
 
-  it 'has a total revenue generated from items on the invoice including discounts' do
+  it 'has a total discounted revenue generated from items on the invoice' do
     merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
     
     discount1 = merchant1.discounts.create!(percentage: 20, quantity_threshold: 10)

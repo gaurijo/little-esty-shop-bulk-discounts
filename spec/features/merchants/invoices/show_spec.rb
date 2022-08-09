@@ -101,7 +101,7 @@ RSpec.describe 'Merchant Invoices Show Page' do
     expect(page).to have_content('$6,120.06')
   end
 
-  it 'has a total revenue generated from all items on the invoice including discounts' do
+  it 'has a total discounted revenue generated' do
     merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
     
     discount1 = merchant1.discounts.create!(percentage: 10, quantity_threshold: 2)
@@ -162,6 +162,10 @@ RSpec.describe 'Merchant Invoices Show Page' do
     within "#invoice_item-#{invoice_item2.id}" do 
       expect(page).to have_link("See discount for #{invoice_item2.item.name}")
       expect(page).to_not have_link("See discount for #{invoice_item1.item.name}")
+
+      click_link("See discount for #{invoice_item2.item.name}")
+      # expect(current_path).to eq("/merchants/#{merchant1.id}/discounts/#{discount2.id}")
+      #i'm actually getting "/merchants/merchant_id/invoices/id"
     end
   end
 end
