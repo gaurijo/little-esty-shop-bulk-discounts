@@ -124,7 +124,4 @@ RSpec.describe "admin invoice show page" do
     expect(page).to have_content('$1,389.89') #add model method in view
   end
 end
-# As an admin
-# When I visit an admin invoice show page
-# Then I see the total revenue from this invoice (not including discounts)
-# And I see the total discounted revenue from this invoice which includes bulk discounts in the calculation
+##this was working before I pushed the change up to heroku
