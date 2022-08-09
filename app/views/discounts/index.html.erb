@@ -5,12 +5,20 @@
 
 <% @merchant.discounts.each do |discount| %>
 <div id="discount-<%= discount.id %>">
- <p>Percentage: <%= discount.percentage %>%</p>
- <p>Quantity threshold: <%= discount.quantity_threshold %></p>
- <p><%= link_to "View discount", "/merchants/#{@merchant.id}/discounts/#{discount.id}" %></p>
- 
- <%= link_to "Delete discount","/merchants/#{@merchant.id}/discounts/#{discount.id}", method: :delete %>
-</div>
- <% end %>
+  <p>Percentage: <%= discount.percentage %>%</p>
+  <p>Quantity threshold: <%= discount.quantity_threshold %></p>
+  <p><%= link_to "View discount", "/merchants/#{@merchant.id}/discounts/#{discount.id}" %></p>
 
-   <p><%= link_to "Create discount", "/merchants/#{@merchant.id}/discounts/new" %></p>
+  <%= link_to "Delete discount","/merchants/#{@merchant.id}/discounts/#{discount.id}", method: :delete %>
+</div>
+<% end %>
+
+<p><%= link_to "Create discount", "/merchants/#{@merchant.id}/discounts/new" %></p>
+
+<div class="header">
+  <h2>Upcoming Holidays</h2>
+  <% @holidays.holiday_information.each do |holiday|%>
+    <p><%= holiday.name %></p>
+  <% end %>
+</div>
+

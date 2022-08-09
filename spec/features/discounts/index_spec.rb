@@ -87,4 +87,25 @@ RSpec.describe "Discounts Index page" do
       expect(current_path).to eq("/merchants/#{merchant1.id}/discounts")
     end
   end
+
+  it "has a section with a header 'Upcoming Holidays'" do 
+    merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
+    merchant2 = Merchant.create!(name: 'Walmart', status: 'Enabled')
+
+    discount1 = merchant1.discounts.create!(percentage: 10, quantity_threshold: 20)
+    discount2 = merchant1.discounts.create!(percentage: 40, quantity_threshold: 30)
+
+    visit "/merchants/#{merchant1.id}/discounts"
+    save_and_open_page
+    expect(page).to have_css('h2', text: 'Upcoming Holidays')
+    expect(page).to have_content("Labour Day")
+    expect(page).to have_content("Columbus Day")
+    expect(page).to have_content("Veterans Day")
+  end
 end
+# As a merchant
+# When I visit the discounts index page
+# I see a section with a header of "Upcoming Holidays"
+# In this section the name and date of the next 3 upcoming US holidays are listed.
+
+# Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
