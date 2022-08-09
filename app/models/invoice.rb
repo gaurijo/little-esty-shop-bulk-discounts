@@ -14,11 +14,11 @@ class Invoice < ApplicationRecord
   end
 
   def discounted_revenue
-    x = invoice_items
-    .joins(:discounts) #join invoice on discounts
+    x = invoice_items.joins(:discounts) #join invoice on discounts
     .where('invoice_items.quantity >= discounts.quantity_threshold') 
     #must meet this condition ^ invoice items qty >= discounts qty threshold
-    .select('invoice_items.id, max((discounts.percentage) * (invoice_items.quantity * invoice_items.unit_price)) AS disc').group('invoice_items.id')
+    .select('invoice_items.id, max((discounts.percentage) * (invoice_items.quantity * invoice_items.unit_price)) AS disc')
+    .group('invoice_items.id')
     #of those that meet the condition, i'm SELECTing the invoice_item id of the invoice_item totals and
     #applying the MAXIMUM discount % to that total (giving it alias called 'disc')
     #i'm grouping that 'disc' by the invoice_items id (part of our select statement)

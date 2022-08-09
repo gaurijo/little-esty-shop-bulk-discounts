@@ -9,11 +9,13 @@
 <h2>Item Information</h2>
   <% @invoice.items.each do |item| %>
     <% item.invoice_items.each do |invoice_item| %>
-      <h3>Name: <%= item.name %></h3>
+    <div id="invoice_item-<%= invoice_item.id%>">
+      <h4>Name: <%= item.name %> <%= link_to "See discount for #{invoice_item.item.name}" %></h4>
       <p>Quantity: <%= invoice_item.quantity %></p>
       <p>Price: <%= number_to_currency(item.unit_price.fdiv(100)) %>
       <p>Status: <%= invoice_item.status %></p>
     <% end %>
+    </div>
   <% end %>
   <br/>
 
