@@ -129,4 +129,33 @@ RSpec.describe Invoice, type: :model do
       expect(invoice1.total_rev).to eq(612006)
     end
   end
+
+  it 'has a total revenue generated from items on the invoice including discounts' do
+    merchant1 = Merchant.create!(name: 'Fake Merchant', status: 'Enabled')
+    
+    discount1 = merchant1.discounts.create!(percentage: 20, quantity_threshold: 10)
+
+    item1 = Item.create!(name: 'Coaster', description: 'For day drinking', unit_price: 74344, merchant_id: merchant1.id)
+    item2 = Item.create!(name: 'Tongs', description: 'For ice buckets', unit_price: 98334, merchant_id: merchant1.id)
+
+    customer1 = Customer.create!(first_name: 'Bob', last_name: 'Smith')
+    customer2 = Customer.create!(first_name: 'Suzie', last_name: 'Hill')
+    customer3 = Customer.create!(first_name: 'Roger', last_name: 'Mathis')
+
+    invoice1 = customer1.invoices.create!(status: 2)
+    invoice2 = customer2.invoices.create!(status: 2)
+    invoice3 = customer3.invoices.create!(status: 2)
+
+    invoice_item1 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice1.id, quantity: 10, unit_price: 43434, status: 2)
+    invoice_item2 = InvoiceItem.create!(item_id: item2.id, invoice_id: invoice1.id, quantity: 5, unit_price: 87654, status: 2)
+    
+    expect(invoice1.discounted_revenue).to eq(785742) 
+  end
 end
+#i want the invoice_items where the discount threshold is equal/less than invoice item qty, 
+#the highest discount available is applied to the invoice for the items quantity that's within the threshold.
+#merchant 1 has 1 discount 20% off 10 items
+#invoice_item 1 qty on Invoice 1 is 10
+#invoice_item 2 qty on Invoice 1 is 5
+#Only invoice_item 1 should receive the 20% discount 
+#the discounted revenue is the total revenue minus whatever you get for the applied discount and does not include the regular revenue
